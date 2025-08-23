@@ -3,7 +3,7 @@ from events.models import Category,Event, Participant
 
 
 class StyleDFormMixin:
-    default_css_class = 'form-control'
+    default_css_class = 'form-control '
     
     def apply_style_widget(self):
         for field_name, field in self.fields.items():
@@ -15,7 +15,7 @@ class StyleDFormMixin:
                
                 
                 
-class CategoryForm(forms.ModelForm):
+class CategoryForm(StyleDFormMixin,forms.ModelForm):
     class Meta:
         model = Category
         fields = ['name']

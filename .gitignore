@@ -1,0 +1,16 @@
+event_env/
+__pycache__/
+db.sqlite3
+*.pyc
+.DS_Store
+*.log
+*.sqlite3
+*.env
+*.pot
+*.mo
+*.pyc
+*.pyo
+*.swp
+*.swo
+*.bak       
+node_modules/

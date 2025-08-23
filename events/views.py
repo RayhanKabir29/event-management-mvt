@@ -34,3 +34,9 @@ def update_category(request,id):
             form.save()
             return HttpResponse("Category Update Successfully")
     return render(request, 'edit_category.html', {'form': form})
+
+def delete_category(request,id):
+    if request.method == 'POST':
+        category = Category.objects.get(id=id)
+        category.delete()
+    return HttpResponse("Delete Category")

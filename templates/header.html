@@ -4,18 +4,17 @@
       Event Manager
     </a>
     <nav class="space-x-6">
-      <a href="{% url 'events' %}" 
-         class="text-gray-700 hover:text-indigo-600 transition-colors">
-        Events
-      </a>
-      {% comment %} <a href="{% url 'participant' %}" 
-         class="text-gray-700 hover:text-indigo-600 transition-colors">
-        Participants
-      </a>
-      <a href="{% url 'category' %}" 
-         class="text-gray-700 hover:text-indigo-600 transition-colors">
-        Categories
-      </a> {% endcomment %}
+      <a href="{% url 'events' %}" class="text-gray-700 hover:text-indigo-600"
+        >Events</a
+      >
+      <a
+        href="{% url 'participant' %}"
+        class="text-gray-700 hover:text-indigo-600"
+        >Participants</a
+      >
+      <a href="{% url 'category' %}" class="text-gray-700 hover:text-indigo-600"
+        >Categories</a
+      >
     </nav>
   </div>
 </header>

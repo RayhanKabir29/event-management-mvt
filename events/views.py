@@ -1,12 +1,23 @@
 from django.shortcuts import render
 from django.http import HttpResponse
-from events.forms import CategoryForm
-from events.models import Category
+from events.forms import CategoryForm, EventForm
+from events.models import Category, Event, Participant
 
 # Create your views here.
 
 def show_events(request):
-    return render(request, "show_events.html")
+    events = Event.objects.all()
+    return render(request, "show_events.html",{'events': events})
+
+def create_event(request):
+    form = EventForm()
+    if request.method == 'POST':
+        form = EventForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return HttpResponse("Event created successfully!")
+    return render(request, 'create_event.html', {'form': form})
+
 
 
 def show_categories(request):

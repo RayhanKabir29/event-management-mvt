@@ -1,7 +1,7 @@
 
 from django.urls import path
-from events.views import home
+from events.views import show_events    
 
 urlpatterns = [
-    path('show_events/',home)
+    path('',show_events, name='events'),
 ]

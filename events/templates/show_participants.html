@@ -1,6 +1,5 @@
 {% extends "base.html" %} {% block content %}
 <div class="bg-white shadow-lg rounded-xl p-6">
-  
   <div class="flex justify-end items-center mb-6 px-4">
     <a
       href="{% url 'create_participant' %}"
@@ -51,21 +50,24 @@
           <td class="border border-gray-300 px-4 py-2">
             {{ participant.email }}
           </td>
-          <td class="border border-gray-300 px-4 py-2">{{ participant.phone }}</td>
           <td class="border border-gray-300 px-4 py-2">
-            {{ participant.participants.all|join:", " }}
+            {{ participant.phone }}
           </td>
-          {% comment %} {% url 'update_participant' participant.id %} {% endcomment %}
-           {% comment %} {% url 'delete_participant' participant.id %} {% endcomment %}
+          <td class="border border-gray-300 px-4 py-2">
+            {{ participant.participant_events.all|join:", " }}
+          </td>
+
+          {% comment %}  {%
+          endcomment %} {% comment %}  {% endcomment %}
           <td class="border border-gray-300 px-4 py-2 text-center">
             <div class="flex items-center justify-center gap-4">
               <a
-                href=""
+                href="{% url 'update_participant' participant.id %}"
                 class="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded text-sm"
               >
                 Edit
               </a>
-              <form action="" method="POST">
+              <form action="{% url 'delete_participant' participant.id%}" method="POST">
                 {% csrf_token %}
                 <button
                   class="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded text-sm"

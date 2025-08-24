@@ -1,7 +1,8 @@
-from django.shortcuts import render
+from django.shortcuts import render,redirect
 from django.http import HttpResponse
 from events.forms import CategoryForm, EventForm,ParticipantForm
 from events.models import Category, Event, Participant
+from django.contrib import messages
 
 # Create your views here.
 
@@ -15,7 +16,8 @@ def create_event(request):
         form = EventForm(request.POST)
         if form.is_valid():
             form.save()
-            return HttpResponse("Event created successfully!")
+            messages.success(request, 'Event created successfully!')
+            return redirect('create_event')
     return render(request, 'create_event.html', {'form': form})
 
 def update_event(request,id):
@@ -25,14 +27,17 @@ def update_event(request,id):
         form = EventForm(request.POST, instance=event)
         if form.is_valid():
             form.save()
-            return HttpResponse("Event updated successfully!")
+            messages.success(request, 'Event update successfully!')
+            return redirect('update_event')
     return render(request, 'update_event.html', {'form': form})
 
 def delete_event(request,id):
     if request.method == 'POST':
         event = Event.objects.get(id=id)
         event.delete()
-    return HttpResponse("Event deleted successfully!")
+        messages.success(request, 'Event delete successfully!')
+        return redirect('show_events')
+    
 
 def show_categories(request):
     categories = Category.objects.all()
@@ -44,7 +49,8 @@ def crete_category(request):
         form = CategoryForm(request.POST)
         if form.is_valid():
             form.save()
-            return HttpResponse("Category Created Successfully")
+            messages.success(request, 'Category created successfully!')
+            return redirect('create_category')
     return render(request, 'create_category.html', {'form': form})
 
 def update_category(request,id):
@@ -54,14 +60,16 @@ def update_category(request,id):
         form = CategoryForm(request.POST, instance=category)
         if form.is_valid():
             form.save()
-            return HttpResponse("Category Update Successfully")
+            messages.success(request, 'Category update successfully!')
+            return redirect('update_category')
     return render(request, 'edit_category.html', {'form': form})
 
 def delete_category(request,id):
     if request.method == 'POST':
         category = Category.objects.get(id=id)
         category.delete()
-    return HttpResponse("Delete Category")
+        messages.success(request, 'Category delete successfully!')
+        return redirect('show_categories')
 
 def show_participants(request):
     participants = Participant.objects.all()
@@ -73,5 +81,24 @@ def create_participant(request):
         form = ParticipantForm(request.POST)
         if form.is_valid():
             form.save()
-            return HttpResponse("Participant created successfully!")
+            messages.success(request, 'Participant created successfully!')
+            return redirect('show_participants')
     return render(request, 'create_participant.html', {'form': form})
+
+def update_participant(request,id):
+    participant = Participant.objects.get(id=id)
+    form = ParticipantForm(instance=participant)
+    if request.method == 'POST':
+        form = ParticipantForm(request.POST, instance=participant)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Participant update successfully!')
+            return redirect('update_participants')
+    return render(request, 'update_participant.html', {'form': form})
+
+def delete_participant(request,id):
+    if request.method == 'POST':
+        participant = Participant.objects.get(id=id)
+        participant.delete()
+        messages.success(request, 'Participant delete successfully!')
+        return redirect('show_participants')

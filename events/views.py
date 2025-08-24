@@ -28,6 +28,12 @@ def update_event(request,id):
             return HttpResponse("Event updated successfully!")
     return render(request, 'update_event.html', {'form': form})
 
+def delete_event(request,id):
+    if request.method == 'POST':
+        event = Event.objects.get(id=id)
+        event.delete()
+    return HttpResponse("Event deleted successfully!")
+
 def show_categories(request):
     categories = Category.objects.all()
     return render(request, "show_categories.html",{'categories': categories})

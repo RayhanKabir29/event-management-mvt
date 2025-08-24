@@ -58,7 +58,7 @@
                 Edit
               </a>
               <form
-                action=""
+                action="{% url 'delete_event' event.id %}"
                 method="POST"
               >
                 {% csrf_token %}

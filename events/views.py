@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.http import HttpResponse
-from events.forms import CategoryForm, EventForm
+from events.forms import CategoryForm, EventForm,ParticipantForm
 from events.models import Category, Event, Participant
 
 # Create your views here.
@@ -38,9 +38,6 @@ def show_categories(request):
     categories = Category.objects.all()
     return render(request, "show_categories.html",{'categories': categories})
 
-def show_participants(request):
-    return render(request, "show_participants.html")
-
 def crete_category(request):
     form = CategoryForm()
     if request.method == 'POST':
@@ -65,3 +62,16 @@ def delete_category(request,id):
         category = Category.objects.get(id=id)
         category.delete()
     return HttpResponse("Delete Category")
+
+def show_participants(request):
+    participants = Participant.objects.all()
+    return render(request, "show_participants.html",{'participants': participants})
+
+def create_participant(request):
+    form = ParticipantForm()
+    if request.method == 'POST':
+        form = ParticipantForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return HttpResponse("Participant created successfully!")
+    return render(request, 'create_participant.html', {'form': form})

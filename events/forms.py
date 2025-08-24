@@ -63,6 +63,9 @@ class ParticipantForm(StyleFormMixin, forms.ModelForm):
     class Meta:
         model = Participant
         fields = ['name', 'email', 'phone', 'participant_events']
+        widgets ={
+            'participant_events': forms.CheckboxSelectMultiple,
+        }
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)

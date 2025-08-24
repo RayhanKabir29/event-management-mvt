@@ -18,7 +18,15 @@ def create_event(request):
             return HttpResponse("Event created successfully!")
     return render(request, 'create_event.html', {'form': form})
 
-
+def update_event(request,id):
+    event = Event.objects.get(id=id)
+    form = EventForm(instance=event)
+    if request.method == 'POST':
+        form = EventForm(request.POST, instance=event)
+        if form.is_valid():
+            form.save()
+            return HttpResponse("Event updated successfully!")
+    return render(request, 'update_event.html', {'form': form})
 
 def show_categories(request):
     categories = Category.objects.all()

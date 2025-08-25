@@ -1,0 +1,75 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="p-6 space-y-8">
+
+  <!-- Stats Grid -->
+  <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+    <a href="?filter=all" class="bg-blue-500 text-white rounded-xl p-6 shadow hover:bg-blue-600 transition">
+      <h2 class="text-lg font-semibold">Total Events</h2>
+      <p class="text-3xl font-bold mt-2">{{ total_events }}</p>
+    </a>
+    <a href="?filter=upcoming" class="bg-green-500 text-white rounded-xl p-6 shadow hover:bg-green-600 transition">
+      <h2 class="text-lg font-semibold">Upcoming Events</h2>
+      <p class="text-3xl font-bold mt-2">{{ upcoming_events }}</p>
+    </a>
+    <a href="?filter=past" class="bg-red-500 text-white rounded-xl p-6 shadow hover:bg-red-600 transition">
+      <h2 class="text-lg font-semibold">Past Events</h2>
+      <p class="text-3xl font-bold mt-2">{{ past_events }}</p>
+    </a>
+    <div class="bg-purple-500 text-white rounded-xl p-6 shadow">
+      <h2 class="text-lg font-semibold">Total Participants</h2>
+      <p class="text-3xl font-bold mt-2">{{ total_participants }}</p>
+    </div>
+  </div>
+
+  <!-- Today's Events -->
+  <div>
+    <h2 class="text-xl font-bold mb-4">Today’s Events</h2>
+    <ul class="space-y-3">
+      {% for event in todays_events %}
+        <li class="p-4 bg-gray-100 rounded shadow">
+          <h3 class="font-semibold">{{ event.title }}</h3>
+          <p class="text-sm text-gray-600">{{ event.time }} • {{ event.location }}</p>
+        </li>
+      {% empty %}
+        <p class="text-gray-500">No events scheduled for today.</p>
+      {% endfor %}
+    </ul>
+  </div>
+
+  <!-- Filtered Events -->
+  <div>
+    <h2 class="text-xl font-bold mb-4">
+      {% if filter_type == "upcoming" %}Upcoming Events{% elif filter_type == "past" %}Past Events{% else %}All Events{% endif %}
+    </h2>
+
+    <table class="table-auto border-collapse border border-gray-300 w-full text-left">
+      <thead class="bg-gray-200">
+        <tr>
+          <th class="border px-4 py-2">ID</th>
+          <th class="border px-4 py-2">Name</th>
+          <th class="border px-4 py-2">Date</th>
+          <th class="border px-4 py-2">Time</th>
+          <th class="border px-4 py-2">Location</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for event in events %}
+          <tr class="hover:bg-gray-50">
+            <td class="border px-4 py-2">{{ event.id }}</td>
+            <td class="border px-4 py-2">{{ event.title }}</td>
+            <td class="border px-4 py-2">{{ event.date }}</td>
+            <td class="border px-4 py-2">{{ event.time }}</td>
+            <td class="border px-4 py-2">{{ event.location }}</td>
+          </tr>
+        {% empty %}
+          <tr>
+            <td colspan="5" class="text-center text-gray-500 py-4">No events found.</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+
+</div>
+{% endblock %}

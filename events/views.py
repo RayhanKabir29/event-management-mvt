@@ -5,6 +5,7 @@ from events.models import Category, Event, Participant
 from django.contrib import messages
 from django.db.models import Count, Sum,Q
 from django.utils.dateparse import parse_date
+from django.utils.timezone import now
 
 # Create your views here.
 def show_events(request):
@@ -137,3 +138,39 @@ def delete_participant(request,id):
         participant.delete()
         messages.success(request, 'Participant delete successfully!')
         return redirect('show_participants')
+    
+def organizer_dashboard(request):
+    today = now().date()
+
+    # --- Stats ---
+    total_participants = Participant.objects.count()
+    total_events = Event.objects.count()
+    upcoming_events = Event.objects.filter(date__gte=today).count()
+    past_events = Event.objects.filter(date__lt=today).count()
+
+    # --- Today’s Events ---
+    todays_events = Event.objects.filter(date=today)
+
+    # --- Interactive Filter (by query param) ---
+    filter_type = request.GET.get("filter")  # 'all', 'upcoming', 'past'
+
+    if filter_type == "upcoming":
+        events = Event.objects.filter(date__gte=today)
+    elif filter_type == "past":
+        events = Event.objects.filter(date__lt=today)
+    else:
+        events = Event.objects.all()  # default: show all
+
+    return render(
+        request,
+        "organized_dashboard/organizer_dashboard.html",
+        {
+            "total_participants": total_participants,
+            "total_events": total_events,
+            "upcoming_events": upcoming_events,
+            "past_events": past_events,
+            "todays_events": todays_events,
+            "events": events,
+            "filter_type": filter_type or "all",
+        },
+    )

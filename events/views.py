@@ -64,7 +64,7 @@ def update_event(request,id):
         if form.is_valid():
             form.save()
             messages.success(request, 'Event update successfully!')
-            return redirect('update_event')
+            return redirect('events')
     return render(request, 'update_event.html', {'form': form})
 
 def delete_event(request,id):
@@ -72,7 +72,7 @@ def delete_event(request,id):
         event = Event.objects.get(id=id)
         event.delete()
         messages.success(request, 'Event delete successfully!')
-        return redirect('show_events')
+        return redirect('events')
     
 
 def show_categories(request):
@@ -97,7 +97,7 @@ def update_category(request,id):
         if form.is_valid():
             form.save()
             messages.success(request, 'Category update successfully!')
-            return redirect('update_category')
+            return redirect('category')
     return render(request, 'edit_category.html', {'form': form})
 
 def delete_category(request,id):
@@ -105,7 +105,7 @@ def delete_category(request,id):
         category = Category.objects.get(id=id)
         category.delete()
         messages.success(request, 'Category delete successfully!')
-        return redirect('show_categories')
+        return redirect('category')
 
 def show_participants(request):
     participants = Participant.objects.all()
@@ -129,7 +129,7 @@ def update_participant(request,id):
         if form.is_valid():
             form.save()
             messages.success(request, 'Participant update successfully!')
-            return redirect('update_participants')
+            return redirect('participant')
     return render(request, 'update_participant.html', {'form': form})
 
 def delete_participant(request,id):
@@ -137,7 +137,7 @@ def delete_participant(request,id):
         participant = Participant.objects.get(id=id)
         participant.delete()
         messages.success(request, 'Participant delete successfully!')
-        return redirect('show_participants')
+        return redirect('participant')
     
 def organizer_dashboard(request):
     today = now().date()

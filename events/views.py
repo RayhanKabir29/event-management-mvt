@@ -64,7 +64,7 @@ def update_event(request,id):
         if form.is_valid():
             form.save()
             messages.success(request, 'Event update successfully!')
-            return redirect('update_event')
+            return redirect('show_events')
     return render(request, 'update_event.html', {'form': form})
 
 def delete_event(request,id):
@@ -97,7 +97,7 @@ def update_category(request,id):
         if form.is_valid():
             form.save()
             messages.success(request, 'Category update successfully!')
-            return redirect('update_category')
+            return redirect('show_categories')
     return render(request, 'edit_category.html', {'form': form})
 
 def delete_category(request,id):
@@ -129,7 +129,7 @@ def update_participant(request,id):
         if form.is_valid():
             form.save()
             messages.success(request, 'Participant update successfully!')
-            return redirect('update_participants')
+            return redirect('show_participants')
     return render(request, 'update_participant.html', {'form': form})
 
 def delete_participant(request,id):

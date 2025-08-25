@@ -118,7 +118,7 @@ def create_participant(request):
         if form.is_valid():
             form.save()
             messages.success(request, 'Participant created successfully!')
-            return redirect('create_participants')
+            return redirect('create_participant')
     return render(request, 'create_participant.html', {'form': form})
 
 def update_participant(request,id):

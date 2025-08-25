@@ -3,7 +3,7 @@ from django.http import HttpResponse
 from events.forms import CategoryForm, EventForm,ParticipantForm
 from events.models import Category, Event, Participant
 from django.contrib import messages
-from django.db.models import Count, Sum
+from django.db.models import Count, Sum,Q
 from django.utils.dateparse import parse_date
 
 # Create your views here.
@@ -16,7 +16,8 @@ def show_events(request):
     )
     category_id = request.GET.get("category")  
     start_date = request.GET.get("start_date") 
-    end_date = request.GET.get("end_date")     
+    end_date = request.GET.get("end_date") 
+    search = request.GET.get("search")    
 
     if category_id:
         events = events.filter(category_id=category_id)
@@ -24,6 +25,10 @@ def show_events(request):
     if start_date and end_date:
         events = events.filter(
             date__range=[parse_date(start_date), parse_date(end_date)]
+        )
+    if search:
+        events = events.filter(
+            Q(title__icontains=search) | Q(location__icontains=search)
         )
     total_participants_across_all = events.aggregate(
         total=Sum("total_participants")

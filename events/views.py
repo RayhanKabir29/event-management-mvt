@@ -3,18 +3,42 @@ from django.http import HttpResponse
 from events.forms import CategoryForm, EventForm,ParticipantForm
 from events.models import Category, Event, Participant
 from django.contrib import messages
-from django.db.models import Count
+from django.db.models import Count, Sum
+from django.utils.dateparse import parse_date
 
 # Create your views here.
-
 def show_events(request):
     events = (
         Event.objects
-        .select_related("category")              
-        .prefetch_related("events")              
-        .annotate(total_participants=Count("events"))  
+        .select_related("category")
+        .prefetch_related("events")  
+        .annotate(total_participants=Count("events"))
     )
-    return render(request, "show_events.html", {"events": events})
+    category_id = request.GET.get("category")  
+    start_date = request.GET.get("start_date") 
+    end_date = request.GET.get("end_date")     
+
+    if category_id:
+        events = events.filter(category_id=category_id)
+
+    if start_date and end_date:
+        events = events.filter(
+            date__range=[parse_date(start_date), parse_date(end_date)]
+        )
+    total_participants_across_all = events.aggregate(
+        total=Sum("total_participants")
+    )["total"] or 0
+    categories = Category.objects.all()
+
+    return render(
+        request,
+        "show_events.html",
+        {
+            "events": events,
+            "total_participants_across_all": total_participants_across_all,
+            "categories": categories,
+        },
+    )
 
 def create_event(request):
     form = EventForm()

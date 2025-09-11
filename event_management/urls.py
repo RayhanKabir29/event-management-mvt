@@ -8,5 +8,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path("", organizer_dashboard, name="home"),
     path('events/',include('events.urls')),
+    path('users/', include('users.urls'))
 ]
  

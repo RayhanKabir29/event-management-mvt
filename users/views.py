@@ -12,3 +12,11 @@ def sign_up(request):
             print(form.cleaned_data)
             form.save()
     return render (request, 'registration/register.html',{"form":form})
+
+def sign_in(request):
+    if request.method == "GET":
+        pass
+    if request.method == "POST":
+        form = UserCreationForm()
+        
+    return render (request, "",{"form":form})

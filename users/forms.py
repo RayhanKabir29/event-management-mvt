@@ -8,7 +8,7 @@ class TailwindFormMixin:
         super().__init__(*args, **kwargs)
         for visible in self.visible_fields():
             visible.field.widget.attrs['class'] = (
-                'block w-full pl-10 px-3 py-2 border border-gray-300 rounded-lg '
+                'block w-full px-3 py-2 border border-gray-300 rounded-lg '
                 'shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm'
             )
             visible.field.widget.attrs['placeholder'] = visible.field.label

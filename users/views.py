@@ -28,3 +28,7 @@ def sign_in(request):
         else:
             messages.error(request, "Invalid Username Or Password")
     return render (request, 'auth/signin.html' )
+def sign_out(request):
+    logout(request) 
+    messages.success(request, "Logged out successfully.")
+    return redirect('sign_in')  

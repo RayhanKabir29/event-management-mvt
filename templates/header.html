@@ -3,18 +3,29 @@
     <a href="/" class="text-xl font-bold text-gray-800 hover:text-indigo-600">
       Event Manager
     </a>
-    <nav class="space-x-6">
-      <a href="{% url 'events' %}" class="text-gray-700 hover:text-indigo-600"
-        >Events</a
-      >
-      <a
-        href="{% url 'participant' %}"
-        class="text-gray-700 hover:text-indigo-600"
-        >Participants</a
-      >
-      <a href="{% url 'category' %}" class="text-gray-700 hover:text-indigo-600"
-        >Categories</a
-      >
+    <nav class="space-x-6 flex items-center">
+      <a href="{% url 'events' %}" class="text-gray-700 hover:text-indigo-600">
+        Events
+      </a>
+      <a href="{% url 'participant' %}" class="text-gray-700 hover:text-indigo-600">
+        Participants
+      </a>
+      <a href="{% url 'category' %}" class="text-gray-700 hover:text-indigo-600">
+        Categories
+      </a>
+
+      {% if user.is_authenticated %}
+        <span class="text-gray-700">Hi, {{ user.username }}</span>
+        <a href="{% url 'sign_out' %}" 
+           class="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600">
+           Logout
+        </a>
+      {% comment %} {% else %}
+        <a href="{% url 'sign_in' %}" 
+           class="bg-indigo-500 text-white px-3 py-1 rounded hover:bg-indigo-600">
+           Login
+        </a> {% endcomment %}
+      {% endif %}
     </nav>
   </div>
 </header>

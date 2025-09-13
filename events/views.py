@@ -141,17 +141,13 @@ def delete_participant(request,id):
     
 def organizer_dashboard(request):
     today = now().date()
-
-    # --- Stats ---
     total_participants = Participant.objects.count()
     total_events = Event.objects.count()
     upcoming_events = Event.objects.filter(date__gte=today).count()
     past_events = Event.objects.filter(date__lt=today).count()
 
-    # --- Today’s Events ---
     todays_events = Event.objects.filter(date=today)
 
-    # --- Interactive Filter (by query param) ---
     filter_type = request.GET.get("filter")  # 'all', 'upcoming', 'past'
 
     if filter_type == "upcoming":

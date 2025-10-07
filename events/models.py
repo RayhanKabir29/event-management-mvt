@@ -1,4 +1,9 @@
 from django.db import models
+from django.db.models.signals import post_save
+from django.dispatch import receiver
+from django.db.models.signals import m2m_changed
+from django.core.mail import send_mail
+from django.conf import settings
 
 # Create your models here.
 class Category(models.Model):
@@ -24,3 +29,15 @@ class Participant(models.Model):
 
     def __str__(self):
         return self.name 
+    
+# Signals 
+
+# def notify_event_creation(sender, instance, created, **kwargs):
+#     # Placeholder for notification logic
+#     print('sender',sender)
+#     print('instance',instance)
+#     print('created',created)
+#     print('kwargs',kwargs)
+
+
+    
